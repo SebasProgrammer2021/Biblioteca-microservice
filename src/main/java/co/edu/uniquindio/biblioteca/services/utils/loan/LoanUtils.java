@@ -11,6 +11,7 @@ import co.edu.uniquindio.biblioteca.repo.LoanRepo;
 import co.edu.uniquindio.biblioteca.services.excepciones.BookNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,13 @@ public class LoanUtils {
      *
      * @param code
      */
-    public void getLoan(Long code) {
+    public void validateLoanExistence(Long code) {
         loanRepo.findById(code).orElseThrow(() -> new BookNotFoundException("El Prestamo no existe."));
+    }
+
+    public Prestamo getLoan(Long code) {
+        Prestamo loanFinded = loanRepo.findById(code).orElseThrow(() -> new BookNotFoundException("El Prestamo no existe."));
+        return loanFinded;
     }
 
     public List<LoanGetDTO> setListLoanGetDTO(List<Prestamo> loanList) {
